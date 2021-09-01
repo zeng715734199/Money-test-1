@@ -36,12 +36,12 @@ nav {
     align-items: center;
     flex-direction: column;
     .icon {
-      width: 32px;
-      height: 32px;
+      width: 30px;
+      height: 30px;
     }
   }
   > .item.selected{
-    color: yellow;
+    color: lightseagreen;
   }
 }
 </style>
