@@ -1,6 +1,6 @@
 <template>
   <Layout>
-    <Types/>
+    <Types :xxx="333"/>
     <Tags/>
     <Notes/>
     <NumberPad/>
