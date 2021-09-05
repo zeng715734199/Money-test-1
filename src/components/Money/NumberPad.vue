@@ -2,31 +2,68 @@
   <div class="numberPad">
 
     <div class="buttons">
-      <button class="empty"><span>清空</span></button>
-      <div class="output"><span class="numb">100</span></div>
-      <button><span>1</span></button>
-      <button><span>2</span></button>
-      <button><span>3</span></button>
-      <button><span>+</span></button>
-      <button><span>4</span></button>
-      <button><span>5</span></button>
-      <button><span>6</span></button>
-      <button><span>-</span></button>
-      <button><span>7</span></button>
-      <button><span>8</span></button>
-      <button><span>9</span></button>
-      <button class="ok"><span class="huang">OK</span></button>
-      <button><span>.</span></button>
-      <button class="zero"><span>0</span></button>
-      <button><span>删除</span></button>
+      <button @click="clear" class="empty"><span>清空</span></button>
+      <div class="output"><span class="numb">{{ output }}</span></div>
+      <button @click="outputContent"><span>1</span></button>
+      <button @click="outputContent"><span>2</span></button>
+      <button @click="outputContent"><span>3</span></button>
+      <button @click="add"><span>+</span></button>
+      <button @click="outputContent"><span>4</span></button>
+      <button @click="outputContent"><span>5</span></button>
+      <button @click="outputContent"><span>6</span></button>
+      <button @click="minus"><span>-</span></button>
+      <button @click="outputContent"><span>7</span></button>
+      <button @click="outputContent"><span>8</span></button>
+      <button @click="outputContent"><span>9</span></button>
+      <button @click="ok" class="ok"><span class="finish">OK</span></button>
+      <button @click="outputContent"><span>.</span></button>
+      <button @click="outputContent" class="zero"><span>0</span></button>
+      <button @click="remove"><span>删除</span></button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-export default {
-  name: 'NumberPad.vue'
-};
+import Vue from 'vue';
+import {Component} from 'vue-property-decorator';
+
+@Component
+export default class xxx extends Vue {
+  output: string = '0';
+
+  outputContent(event: MouseEvent) {
+    const button = (event.target as HTMLButtonElement);
+    const input = button.textContent!;
+    if (this.output.length === 16) {return;}
+    if (this.output === '0') {
+      if ('0123456789'.indexOf(input) >= 0) {
+        this.output = input;
+      } else {
+        this.output += input;
+      }
+      return;
+    }
+    if (this.output.indexOf('.') >= 0 && input === '.') {return;}
+    this.output += input;
+  };
+  remove(){
+    if(this.output.length === 1){
+      this.output = '0';
+    }else{
+      this.output = this.output.slice(0, -1)
+    }
+  };
+  add(event: MouseEvent){
+    const button = (event.target as HTMLButtonElement);
+    const input = button.textContent!;
+    this.output += input
+  };
+  minus(){};
+  clear(){
+    this.output = '0';
+  };
+  ok(){};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -81,7 +118,7 @@ export default {
         background: rgb(254, 255, 254);
       }
 
-      .huang {
+      .finish {
         background: rgb(254, 204, 2);
       }
     }
