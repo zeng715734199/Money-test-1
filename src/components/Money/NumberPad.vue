@@ -7,15 +7,13 @@
       <button @click="outputContent"><span>1</span></button>
       <button @click="outputContent"><span>2</span></button>
       <button @click="outputContent"><span>3</span></button>
-      <button @click="add"><span>+</span></button>
+      <button @click="ok" class="ok"><span class="finish">OK</span></button>
       <button @click="outputContent"><span>4</span></button>
       <button @click="outputContent"><span>5</span></button>
       <button @click="outputContent"><span>6</span></button>
-      <button @click="minus"><span>-</span></button>
       <button @click="outputContent"><span>7</span></button>
       <button @click="outputContent"><span>8</span></button>
       <button @click="outputContent"><span>9</span></button>
-      <button @click="ok" class="ok"><span class="finish">OK</span></button>
       <button @click="outputContent"><span>.</span></button>
       <button @click="outputContent" class="zero"><span>0</span></button>
       <button @click="remove"><span>删除</span></button>
@@ -46,23 +44,20 @@ export default class xxx extends Vue {
     if (this.output.indexOf('.') >= 0 && input === '.') {return;}
     this.output += input;
   };
-  remove(){
-    if(this.output.length === 1){
+
+  remove() {
+    if (this.output.length === 1) {
       this.output = '0';
-    }else{
-      this.output = this.output.slice(0, -1)
+    } else {
+      this.output = this.output.slice(0, -1);
     }
   };
-  add(event: MouseEvent){
-    const button = (event.target as HTMLButtonElement);
-    const input = button.textContent!;
-    this.output += input
-  };
-  minus(){};
-  clear(){
+
+  clear() {
     this.output = '0';
   };
-  ok(){};
+
+  ok() {};
 }
 </script>
 
@@ -105,8 +100,10 @@ export default class xxx extends Vue {
       padding: 3px;
 
       &.ok {
-        height: 45*2px;
+        height: 45*4px;
+        font-size: 24px;
         float: right;
+        font-weight: 700;
       }
 
       > span {
