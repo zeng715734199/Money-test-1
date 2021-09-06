@@ -1,23 +1,10 @@
 <template>
   <div class="tags">
-    <span>
-      <Icon name="餐饮"/>
-      餐饮
-    </span>
-    <span>
-    <Icon name="交通"/>
-    </span>
-    <span>
-    <Icon name="医疗"/>
-    </span>
-    <span>
-    <Icon name="娱乐"/>
-    </span>
-    <span>
-    <Icon name="数码"/>
-    </span>
-    <span>
-    <Icon name="服饰"/>
+    <span v-for="tag in dataSource" :key="tag"
+          @click="toggle(tag)"
+          :class="{selected: selectedTags.indexOf(tag)>=0}">
+      <Icon :name="tag"/>
+      {{ tag }}
     </span>
     <div class="new">
       <button>新增标签</button>
@@ -26,36 +13,59 @@
 </template>
 
 <script lang="ts">
-export default {
-  name: 'Tags.vue'
+import Vue from 'vue';
+import {Component, Prop} from 'vue-property-decorator';
+
+@Component
+export default class Tags extends Vue {
+  @Prop() dataSource: string[] | undefined;
+  selectedTags: string[] = [];
+
+  toggle(tag: string) {
+    const index = this.selectedTags.indexOf(tag);
+    if (index >= 0) {
+      this.selectedTags.splice(index, 1);
+    } else {
+      this.selectedTags.push(tag);
+    }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 @import "~@/assets/style/helper.scss";
+
 .tags {
   display: flex;
   flex-grow: 1;
-  font-size: 14px;
   padding: 20px;
   background: rgb(246, 247, 242);
   align-content: flex-start;
   flex-wrap: wrap;
 
-  > span > .icon {
-    width: 50px;
-    height: 50px;
+  > span {
+    @extend %center;
+    margin: 5px;
+    padding: 8px;
+    flex-direction: column;
+    border: 3px solid transparent;
+    font-size: 12px;
+    font-weight: 600;
+
+    &.selected {
+      background: rgb(200, 226, 216);
+      border: 3px solid $bg;
+    }
+
+    > .icon {
+      min-width: 30px;
+      min-height: 30px;
+    }
   }
 
-  span {
-    @extend %center;
-    margin: 10px 20px;
-    padding: 5px 15px;
-    flex-direction: column;
-    border:1px solid black;
-  }
   > .new {
     padding-top: 16px;
+
     button {
       background: transparent;
       border: none;

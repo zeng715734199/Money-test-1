@@ -14,7 +14,7 @@ import Vue from 'vue';
 import {Component} from 'vue-property-decorator';
 
 @Component
-export default class xxx extends Vue {
+export default class Notes extends Vue {
   value = '';
 };
 </script>
