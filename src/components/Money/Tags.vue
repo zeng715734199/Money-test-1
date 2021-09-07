@@ -6,9 +6,10 @@
       <Icon :name="tag"/>
       {{ tag }}
     </span>
-    <div class="new">
-      <button>新增标签</button>
-    </div>
+<!--    <div  @click="create" class="new">-->
+<!--      <Icon name="add"/>-->
+<!--      新增标签-->
+<!--    </div>-->
   </div>
 </template>
 
@@ -18,7 +19,7 @@ import {Component, Prop} from 'vue-property-decorator';
 
 @Component
 export default class Tags extends Vue {
-  @Prop() dataSource: string[] | undefined;
+  @Prop() readonly dataSource: string[] | undefined;
   selectedTags: string[] = [];
 
   toggle(tag: string) {
@@ -28,7 +29,18 @@ export default class Tags extends Vue {
     } else {
       this.selectedTags.push(tag);
     }
+    this.$emit('update:value', this.selectedTags)
   }
+
+  // create(){
+  //   const name = window.prompt('请输入标签名')
+  //   if(name === ''){
+  //     window.alert('标签名不能为空');
+  //   }else if(this.dataSource){
+  //       this.$emit('update:dataSource',
+  //       [...this.dataSource, name])
+  //   }
+  // }
 };
 </script>
 
@@ -42,8 +54,9 @@ export default class Tags extends Vue {
   background: rgb(246, 247, 242);
   align-content: flex-start;
   flex-wrap: wrap;
+  min-height: 55%;
 
-  > span {
+  > span,.new {
     @extend %center;
     margin: 5px;
     padding: 8px;
@@ -60,18 +73,7 @@ export default class Tags extends Vue {
     > .icon {
       min-width: 30px;
       min-height: 30px;
-    }
-  }
-
-  > .new {
-    padding-top: 16px;
-
-    button {
-      background: transparent;
-      border: none;
-      color: #999;
-      border-bottom: 1px solid;
-      padding: 0 4px;
+      margin-bottom: 5px;
     }
   }
 }
