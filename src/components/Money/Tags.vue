@@ -1,15 +1,15 @@
 <template>
   <div class="tags">
     <ul>
-    <li v-for="tag in dataSource" :key="tag.id"
+      <li v-for="tag in dataSource" :key="tag.id"
           @click="toggle(tag)"
           :class="{selected: selectedTags.indexOf(tag)>=0}">
-<!--      <Icon :name="tag"/>-->
-      {{ tag.name }}
-    </li>
+        <!--      <Icon :name="tag"/>-->
+        {{ tag.name }}
+      </li>
     </ul>
-    <div  @click="create" class="new">
-<!--      <Icon name="add"/>-->
+    <div @click="create" class="new">
+      <!--      <Icon name="add"/>-->
       新增标签
     </div>
   </div>
@@ -31,16 +31,17 @@ export default class Tags extends Vue {
     } else {
       this.selectedTags.push(tag);
     }
-    this.$emit('update:value', this.selectedTags)
+    this.$emit('update:value', this.selectedTags);
   }
 
-  create(){
-    const name = window.prompt('请输入标签名')
-    if(name === ''){
+  create() {
+    const name = window.prompt('请输入标签名');
+    if (name === '') {
       window.alert('标签名不能为空');
-    }else if(this.dataSource){
-        this.$emit('update:dataSource',
-        [...this.dataSource, name])
+      return;
+    } else if (this.dataSource) {
+      this.$emit('update:dataSource',
+          [...this.dataSource, name]);
     }
   }
 };
@@ -58,7 +59,7 @@ export default class Tags extends Vue {
   flex-wrap: wrap;
   min-height: 55%;
 
-  > ul > li ,.new{
+  > ul > li, .new {
     @extend %center;
     margin: 5px;
     padding: 8px;
