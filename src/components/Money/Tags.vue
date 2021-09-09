@@ -1,11 +1,13 @@
 <template>
   <div class="tags">
-    <span v-for="tag in dataSource" :key="tag"
+    <ul>
+    <li v-for="tag in dataSource" :key="tag.id"
           @click="toggle(tag)"
           :class="{selected: selectedTags.indexOf(tag)>=0}">
 <!--      <Icon :name="tag"/>-->
-      {{ tag }}
-    </span>
+      {{ tag.name }}
+    </li>
+    </ul>
     <div  @click="create" class="new">
 <!--      <Icon name="add"/>-->
       新增标签
@@ -56,7 +58,7 @@ export default class Tags extends Vue {
   flex-wrap: wrap;
   min-height: 55%;
 
-  > span,.new {
+  > ul > li ,.new{
     @extend %center;
     margin: 5px;
     padding: 8px;
