@@ -8,6 +8,7 @@
     </span>
     <div  @click="create" class="new">
 <!--      <Icon name="add"/>-->
+      新增标签
     </div>
   </div>
 </template>
