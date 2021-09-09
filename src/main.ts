@@ -15,7 +15,8 @@ Vue.component('Layout', Layout)
 Vue.component('Icon', Icon)
 
 //record store
-
+window.recordList = recordListModel.fetch();
+window.createRecord = (record: RecordItem) =>{recordListModel.create(record);}
 //tag store
 window.tagList = tagListModel.fetch()
 window.findTag = (id: string) => {
