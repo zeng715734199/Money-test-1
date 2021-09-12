@@ -1,0 +1,67 @@
+<template>
+  <ul class="tabs">
+    <li v-for="item in dataSource" :key="item.value"
+        :class="liClass(item)" @click="select(item)">
+      {{ item.text }}
+    </li>
+  </ul>
+</template>
+
+<script lang="ts">
+import Vue from 'vue';
+import {Component, Prop} from 'vue-property-decorator';
+
+type DataSourceItem = { text: string, value: string }
+
+@Component
+export default class Tabs extends Vue {
+  @Prop({required: true, type: Array})
+  dataSource!: DataSourceItem[];
+  @Prop(String)
+  readonly value!: string;
+  @Prop(String)
+  classPrefix?: string;
+
+  liClass(item: DataSourceItem) {
+    return {
+      [this.classPrefix + '-tab-item']: this.classPrefix,
+      selected: item.value === this.value
+    }
+  }
+  select(item: DataSourceItem) {
+    this.$emit('update:value', item.value)
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+@import "~@/assets/style/helper.scss";
+
+.tabs {
+  @extend %center;
+  background: $bg;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  min-height: 60px;
+
+  > li {
+    @extend %center;
+    width: 20%;
+    height: 36px;
+    position: relative;
+    border: none;
+    margin-bottom: -22px;
+
+    &.selected::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: #333;
+    }
+  }
+}
+</style>
