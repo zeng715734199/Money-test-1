@@ -4,18 +4,18 @@
     <div class="buttons">
       <button @click="clear" class="empty"><span>清空</span></button>
       <div class="output"><span class="numb">{{ output }}</span></div>
-      <button @click="outputContent"><span>1</span></button>
-      <button @click="outputContent"><span>2</span></button>
-      <button @click="outputContent"><span>3</span></button>
+      <button @click="inputContent"><span>1</span></button>
+      <button @click="inputContent"><span>2</span></button>
+      <button @click="inputContent"><span>3</span></button>
       <button @click="ok" class="ok"><span class="finish">OK</span></button>
-      <button @click="outputContent"><span>4</span></button>
-      <button @click="outputContent"><span>5</span></button>
-      <button @click="outputContent"><span>6</span></button>
-      <button @click="outputContent"><span>7</span></button>
-      <button @click="outputContent"><span>8</span></button>
-      <button @click="outputContent"><span>9</span></button>
-      <button @click="outputContent"><span>.</span></button>
-      <button @click="outputContent" class="zero"><span>0</span></button>
+      <button @click="inputContent"><span>4</span></button>
+      <button @click="inputContent"><span>5</span></button>
+      <button @click="inputContent"><span>6</span></button>
+      <button @click="inputContent"><span>7</span></button>
+      <button @click="inputContent"><span>8</span></button>
+      <button @click="inputContent"><span>9</span></button>
+      <button @click="inputContent"><span>.</span></button>
+      <button @click="inputContent" class="zero"><span>0</span></button>
       <button @click="remove"><span>删除</span></button>
     </div>
   </div>
@@ -23,13 +23,14 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {Component} from 'vue-property-decorator';
+import {Component, Prop} from 'vue-property-decorator';
 
 @Component
 export default class NumberPad extends Vue {
-  output: string = '0';
+  @Prop(Number) readonly value!: number;
+  output = this.value.toString();
 
-  outputContent(event: MouseEvent) {
+  inputContent(event: MouseEvent) {
     const button = (event.target as HTMLButtonElement);
     const input = button.textContent!;
     if (this.output.length === 16) {return;}
@@ -58,8 +59,9 @@ export default class NumberPad extends Vue {
   };
 
   ok() {
-    this.$emit('update:value', this.output)
-    this.$emit('submit', this.output)
+    const number = parseFloat(this.output)
+    this.$emit('update:value', number)
+    this.$emit('submit', number)
     this.output = '0'
   };
 }

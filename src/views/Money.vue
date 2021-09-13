@@ -6,7 +6,7 @@
     <FormItem field-name="备注："
               placeholder="在这里输入备注"
               @update:value="onUpdateNotes"/>
-    <NumberPad @update:value="onUpdateAmount" @submit="saveRecord"/>
+    <NumberPad :value.sync="record.amount" @submit="saveRecord"/>
   </Layout>
 </template>
 
@@ -41,10 +41,6 @@ export default class Money extends Vue {
     this.record.notes = value;
   };
 
-  onUpdateAmount(value: string) {
-    this.record.amount = parseFloat(value);
-  };
-
   saveRecord() {
     this.$store.commit('createRecord', this.record);
   };
@@ -52,6 +48,13 @@ export default class Money extends Vue {
 </script>
 
 <style lang="scss" scoped>
-
+//::v-deep .layout-content {
+//  display: flex;
+//  flex-direction: column-reverse;
+//}
+//
+//.notes {
+//  padding: 12px 0;
+//}
 </style>
 
