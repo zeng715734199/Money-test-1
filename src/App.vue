@@ -18,4 +18,7 @@ body {
   font-size: 16px;
   background: rgb(246, 247, 242);
 }
+body::-webkit-scrollbar {
+  display:none
+}
 </style>

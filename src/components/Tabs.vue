@@ -41,16 +41,16 @@ export default class Tabs extends Vue {
   @extend %center;
   background: $bg;
   text-align: center;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
-  height: 60px;
+  min-height: 48px;
 
   &-item {
     @extend %center;
     width: 20%;
-    height: 36px;
+    min-height: 38px;
     position: relative;
-    margin-bottom: -22px;
+    margin-bottom: -15px;
 
     &.selected::after {
       content: '';

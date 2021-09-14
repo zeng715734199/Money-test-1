@@ -4,26 +4,28 @@
       <li v-for="tag in tagList" :key="tag.id"
           @click="toggle(tag)"
           :class="{selected: selectedTags.indexOf(tag)>=0}">
-        <!--      <Icon :name="tag"/>-->
         {{ tag.name }}
       </li>
+      <li @click="createTag" class="new">
+        新增标签
+        <!--      <Icon name="add"/>-->
+      </li>
     </ul>
-    <div @click="createTag" class="new">
-      <!--      <Icon name="add"/>-->
-      新增标签
-    </div>
+
+
+
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import {Component, Prop} from 'vue-property-decorator';
+import {Component} from 'vue-property-decorator';
 import {mixins} from 'vue-class-component';
-import TagHelper from '@/mixins/TagHelper.ts'
+import TagHelper from '@/mixins/TagHelper.ts';
 
 @Component
 export default class Tags extends mixins(TagHelper) {
   selectedTags: string[] = [];
+
   get tagList() {
     return this.$store.state.tagList;
   }
@@ -48,32 +50,38 @@ export default class Tags extends mixins(TagHelper) {
 @import "~@/assets/style/helper.scss";
 
 .tags {
-  display: flex;
-  flex-grow: 1;
   padding: 20px;
-  background: rgb(246, 247, 242);
-  align-content: flex-start;
-  flex-wrap: wrap;
-  min-height: 55%;
+  min-height: 54vh;
+  > ul {
+    display: flex;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    flex-grow: 1;
 
-  > ul > li, .new {
-    @extend %center;
-    margin: 5px;
-    padding: 8px;
-    flex-direction: column;
-    border: 3px solid transparent;
-    font-size: 12px;
-    font-weight: 600;
+    > li {
+      @extend %center;
+      margin: 5px;
+      padding: 3px 10px;
+      font-size: 16px;
+      font-weight: 600;
+      border: 3px solid #000;
+      border-radius: 8px;
+      background: #fefffe;
 
-    &.selected {
-      background: rgb(200, 226, 216);
-      border: 3px solid $bg;
-    }
+      &.new {
+        background: #f2a39f;
+      }
 
-    > .icon {
-      min-width: 30px;
-      min-height: 30px;
-      margin-bottom: 5px;
+      &.selected {
+        background: rgb(200, 226, 216);
+        border: 3px solid $bg;
+      }
+
+      > .icon {
+        min-width: 30px;
+        min-height: 30px;
+        margin-bottom: 5px;
+      }
     }
   }
 }

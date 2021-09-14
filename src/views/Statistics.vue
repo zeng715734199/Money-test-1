@@ -1,10 +1,12 @@
 <template>
   <Layout>
     <Tabs class-prefix="type" :data-source="recordTypeList" :value.sync="type"/>
-    <ol>
+    <ol v-if="groupedList.length>0">
       <li v-for="(group, index) in groupedList" :key="index">
-        <h3 class="title">{{ beautify(group.title) }}
-          <span>￥{{ group.total }}</span></h3>
+        <h3 class="title">
+          <span class="date">{{ beautify(group.title) }}</span>
+          <span class="expense">￥{{ group.total }}</span>
+        </h3>
         <ol>
           <li v-for="item in group.items" :key="item.id"
               class="record">
@@ -15,6 +17,9 @@
         </ol>
       </li>
     </ol>
+    <div v-else class="noResult">
+      目前没有相关记录
+    </div>
   </Layout>
 </template>
 
@@ -31,7 +36,8 @@ import clone from '@/lib/clone';
 })
 export default class Statistics extends Vue {
   tagString(tags: Tag[]) {
-    return tags.length === 0 ? '无' : tags.join('，');
+    return tags.length === 0 ? '无' :
+        tags.map(t=>t.name).join('，');
   }
 
   beautify(string: string) {
@@ -56,13 +62,13 @@ export default class Statistics extends Vue {
 
   get groupedList() {
     const {recordList} = this;
-    if (recordList.length === 0) {return [];}
     const newList = clone(recordList)
         .filter(r => r.type === this.type)
         .sort((a, b) => dayjs(b.createdAt).valueOf() - dayjs(a.createdAt).valueOf());
+    if (newList.length === 0) {return [];}
     type Result = { title: string, total?: number, items: RecordItem[] }[]
     const result: Result = [{
-      title: dayjs(newList[0].createdAt).format('YYY-MM-DD'),
+      title: dayjs(newList[0].createdAt).format('YYYY-MM-DD'),
       items: [newList[0]]
     }];
     for (let i = 1; i < newList.length; i++) {
@@ -92,21 +98,46 @@ export default class Statistics extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.noResult {
+  padding: 16px;
+  text-align: center;
+}
 %item {
   padding: 8px 16px;
-  line-height: 24px;
+  line-height: 30px;
+  font-size: 18px;
   display: flex;
   justify-content: space-between;
   align-content: center;
 }
 
 .title {
-  @extend %item
+  line-height: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  background: #fefffe;
+  margin: 10px 0;
+  border-bottom: 3px solid #e6e6e6;
+  > .date {
+    height: 44px;
+    width: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f2a39f;
+    border-radius: 5px;
+    font-weight: 600;
+  }
+  > .expense {
+    padding: 10px;
+  }
 }
 
 .record {
+  @extend %item;
   background: #fefffe;
-  @extend %item
+  border-bottom: 3px solid #e6e6e6;
 }
 
 .notes {

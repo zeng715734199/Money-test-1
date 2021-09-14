@@ -72,7 +72,6 @@ export default class NumberPad extends Vue {
 
 .numberPad {
   background: $bg;
-
   .buttons {
     .empty {
       width: 25%

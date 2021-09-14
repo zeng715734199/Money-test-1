@@ -42,7 +42,7 @@ export default class FormItem extends Vue {
   }
 
   input {
-    min-height: 54px;
+    min-height: 6vh;
     flex-grow: 1;
     background: transparent;
     border: none;

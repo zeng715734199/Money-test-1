@@ -41,12 +41,14 @@ export default class Labels extends mixins(TagHelper) {
   font-size: 18px;
   padding-left: 16px;
 
+
   > .tag {
     min-height: 45px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     border-bottom: 3px solid #e6e6e6;
+    padding: 10px;
 
     svg {
       width: 24px;

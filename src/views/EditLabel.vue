@@ -63,13 +63,14 @@ export default class EditLabel extends Vue {
 .navBar {
   text-align: center;
   font-size: 18px;
-  padding: 12px 16px;
+  padding: 10px 12px;
   background: #fefffe;
   display: flex;
   align-items: center;
   justify-content: space-between;
 
   > .title {
+    font-weight: 600;
   }
 
   > .leftIcon {
