@@ -1,4 +1,4 @@
-# keepaccounts
+# Money
 
 ## Project setup
 ```
